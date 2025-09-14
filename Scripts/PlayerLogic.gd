@@ -25,7 +25,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		yaw -= event.relative.x * mouse_sensitivity
 		pitch -= event.relative.y * mouse_sensitivity
-		yaw = clamp(yaw, base_yaw + deg_to_rad(min_yaw), base_yaw + deg_to_rad(max_yaw))
 		pitch = clamp(pitch, base_pitch + deg_to_rad(min_pitch), base_pitch + deg_to_rad(max_pitch))
 		rotation.y = yaw
 		cam.rotation.x = pitch

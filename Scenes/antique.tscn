@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvt7a56d5sc1f"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_21qhi"]
+height = 1.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_21qhi"]
+height = 1.0
+
+[node name="Antique" type="StaticBody3D" groups=["Antique"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00256014, 0.00608629, 0.000504017)
+shape = SubResource("CapsuleShape3D_21qhi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_21qhi")

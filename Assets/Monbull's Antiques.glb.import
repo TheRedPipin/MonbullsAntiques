@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cdn5hky6p4i8w"
-path="res://.godot/imported/Monbull's Antiques.glb-b6951664fa1cb4dd930ad26160812dd3.scn"
+path="res://.godot/imported/Monbull's Antiques.glb-b1f7e56712a5d0bd15e7587e032049c6.scn"
 
 [deps]
 
-source_file="res://Monbull's Antiques.glb"
-dest_files=["res://.godot/imported/Monbull's Antiques.glb-b6951664fa1cb4dd930ad26160812dd3.scn"]
+source_file="res://Assets/Monbull's Antiques.glb"
+dest_files=["res://.godot/imported/Monbull's Antiques.glb-b1f7e56712a5d0bd15e7587e032049c6.scn"]
 
 [params]
 
