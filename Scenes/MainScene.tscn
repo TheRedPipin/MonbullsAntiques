@@ -1,0 +1,71 @@
+[gd_scene load_steps=10 format=3 uid="uid://csibr8201025i"]
+
+[ext_resource type="Script" uid="uid://dna7g363tswq8" path="res://Scripts/PlayerLogic.gd" id="1_hpc76"]
+[ext_resource type="Script" uid="uid://dsyy6ynmyq23o" path="res://Scripts/MainGameLogic.gd" id="1_tr2i4"]
+[ext_resource type="PackedScene" uid="uid://dfca7nhy5ttrr" path="res://Scenes/Entitie.tscn" id="2_nhkr4"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1305s"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3mqji"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_cihdc"]
+size = Vector3(4, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tr2i4"]
+albedo_color = Color(1, 0.498039, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_nhkr4"]
+size = Vector2(1, 1.5)
+
+[sub_resource type="Curve3D" id="Curve3D_tr2i4"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, -0.755, 0, -2.305, -8, 0, 2, 0, 0, 0, 0, 0, 0, -5.87, 0, 0, 0, 0, 0, 0, 0, 0, -2.62971, 0, 0),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_tr2i4")
+customer_scene = ExtResource("2_nhkr4")
+spawn_point = NodePath("SpawnPoint")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(-0.00428043, 0.0069098, 0.999967, 0.000619058, 0.999976, -0.00690721, -0.99999, 0.000589494, -0.0042846, -0.375827, 1.1463, -0.135395)
+script = ExtResource("1_hpc76")
+mouse_sensitivity = 0.01
+min_yaw = -120.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_1305s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_3mqji")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.359245, 0)
+fov = 73.3252
+
+[node name="Envioment" type="Node3D" parent="."]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Envioment"]
+transform = Transform3D(0.0117633, 0, -0.999931, 0, 1, 0, 0.999931, 0, 0.0117633, -1.45099, -5.96046e-08, 0.0574467)
+mesh = SubResource("BoxMesh_cihdc")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Envioment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0377355, 0, -1.43969)
+mesh = SubResource("BoxMesh_cihdc")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Envioment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.56188, 3.85915, -1.63959)
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Envioment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.44581, 0.511584, -0.187047)
+material_override = SubResource("StandardMaterial3D_tr2i4")
+mesh = SubResource("PlaneMesh_nhkr4")
+
+[node name="SpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 2)
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_tr2i4")

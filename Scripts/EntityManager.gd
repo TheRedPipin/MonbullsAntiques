@@ -1,0 +1,42 @@
+extends CharacterBody3D
+
+@export var label: RichTextLabel
+@export var cps: float = 20.0
+
+var _task_id: int = 0
+
+func _ready() -> void:
+	if label:
+		label.bbcode_enabled = true
+		label.text = ""
+		label.visible_characters = 0
+
+
+func type_text(message: String) -> void:
+	_task_id += 1
+	var my_task := _task_id
+	if label == null:
+		return
+
+	label.bbcode_enabled = true
+	label.text = message
+	label.visible_characters = 0
+
+	if cps <= 0.0:
+		label.visible_characters = -1
+		return
+
+	var delay := 1.0 / cps
+	var total := label.get_total_character_count()
+
+	for i in range(1, total + 1):
+		if my_task != _task_id:
+			return
+		label.visible_characters = i
+		await get_tree().create_timer(delay).timeout
+
+
+func stop_typing() -> void:
+	_task_id += 1
+	if label:
+		label.visible_characters = 0

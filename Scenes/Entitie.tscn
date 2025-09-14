@@ -1,0 +1,72 @@
+[gd_scene load_steps=9 format=3 uid="uid://dfca7nhy5ttrr"]
+
+[ext_resource type="Script" uid="uid://cxxaeqthg6e8c" path="res://Scripts/EntityManager.gd" id="1_awebk"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tsqtg"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_fgr07"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jl0w5"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jl0w5"]
+material = SubResource("StandardMaterial3D_jl0w5")
+size = Vector3(0.25, 0.25, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_jl0w5"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_awebk"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = SubResource("ViewportTexture_jl0w5")
+
+[sub_resource type="QuadMesh" id="QuadMesh_jl0w5"]
+size = Vector2(1, 0.5)
+
+[node name="Entitie" type="CharacterBody3D" node_paths=PackedStringArray("label")]
+script = ExtResource("1_awebk")
+label = NodePath("SubViewport/UI/RichTextLabel")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.713, 0)
+shape = SubResource("CapsuleShape3D_tsqtg")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.713, 0)
+mesh = SubResource("CapsuleMesh_fgr07")
+
+[node name="Face" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 1.289, -0.443708)
+mesh = SubResource("BoxMesh_jl0w5")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(1024, 512)
+
+[node name="UI" type="Control" parent="SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SubViewport/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 128
+bbcode_enabled = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextBox" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 1.9698, 0)
+material_override = SubResource("StandardMaterial3D_awebk")
+mesh = SubResource("QuadMesh_jl0w5")
