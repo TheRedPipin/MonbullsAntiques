@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://csibr8201025i"]
+[gd_scene load_steps=13 format=3 uid="uid://csibr8201025i"]
 
 [ext_resource type="Script" uid="uid://dna7g363tswq8" path="res://Scripts/PlayerLogic.gd" id="1_hpc76"]
 [ext_resource type="Script" uid="uid://dsyy6ynmyq23o" path="res://Scripts/MainGameLogic.gd" id="1_tr2i4"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://cdn5hky6p4i8w" path="res://Assets/Monbull's Antiques.glb" id="4_7rqgy"]
 [ext_resource type="PackedScene" uid="uid://dvt7a56d5sc1f" path="res://Scenes/antique.tscn" id="4_qxria"]
 [ext_resource type="Script" uid="uid://7bs38iquwryy" path="res://Scripts/PlayerCameraScript.gd" id="4_y4jh7"]
-[ext_resource type="Shader" uid="uid://bwbm71qrjxb4n" path="res://Shaders/Outline.gdshader" id="5_q68mp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7rqgy"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -24,12 +23,6 @@ glow_enabled = true
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1305s"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3mqji"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_f140w"]
-render_priority = 0
-shader = ExtResource("5_q68mp")
-shader_parameter/color = Color(0, 0, 0, 1)
-shader_parameter/thickness = 0.05
 
 [sub_resource type="Curve3D" id="Curve3D_tr2i4"]
 _data = {
@@ -65,7 +58,7 @@ fov = 73.3252
 script = ExtResource("4_y4jh7")
 ray_length = 100.0
 desk_anchor = NodePath("../../CounterPoint")
-outline_material = SubResource("ShaderMaterial_f140w")
+desk_offset = null
 
 [node name="AntiqueObjects" type="Node3D" parent="."]
 
