@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://csibr8201025i"]
+[gd_scene load_steps=11 format=3 uid="uid://csibr8201025i"]
 
 [ext_resource type="Script" uid="uid://dna7g363tswq8" path="res://Scripts/PlayerLogic.gd" id="1_hpc76"]
 [ext_resource type="Script" uid="uid://dsyy6ynmyq23o" path="res://Scripts/MainGameLogic.gd" id="1_tr2i4"]
 [ext_resource type="PackedScene" uid="uid://dfca7nhy5ttrr" path="res://Scenes/Entitie.tscn" id="2_nhkr4"]
+[ext_resource type="PackedScene" uid="uid://cdn5hky6p4i8w" path="res://Monbull's Antiques.glb" id="4_7rqgy"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1305s"]
 
@@ -30,9 +31,9 @@ customer_scene = ExtResource("2_nhkr4")
 spawn_point = NodePath("SpawnPoint")
 
 [node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(-0.00428043, 0.0069098, 0.999967, 0.000619058, 0.999976, -0.00690721, -0.99999, 0.000589494, -0.0042846, -0.375827, 1.1463, -0.135395)
+transform = Transform3D(-0.00428043, 0.0069098, 0.999967, 0.000619058, 0.999976, -0.00690721, -0.99999, 0.000589494, -0.0042846, 4.62417, 1.1463, -0.135395)
 script = ExtResource("1_hpc76")
-mouse_sensitivity = 0.01
+mouse_sensitivity = 0.001
 min_yaw = -120.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
@@ -49,11 +50,13 @@ fov = 73.3252
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Envioment"]
 transform = Transform3D(0.0117633, 0, -0.999931, 0, 1, 0, 0.999931, 0, 0.0117633, -1.45099, -5.96046e-08, 0.0574467)
+visible = false
 mesh = SubResource("BoxMesh_cihdc")
 skeleton = NodePath("../MeshInstance3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Envioment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0377355, 0, -1.43969)
+visible = false
 mesh = SubResource("BoxMesh_cihdc")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Envioment"]
@@ -61,8 +64,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.56188, 3.85915, -1.63959)
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="Envioment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.44581, 0.511584, -0.187047)
+visible = false
 material_override = SubResource("StandardMaterial3D_tr2i4")
 mesh = SubResource("PlaneMesh_nhkr4")
+
+[node name="Monbull\'s Antiques" parent="Envioment" instance=ExtResource("4_7rqgy")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.46085, -4.76837e-07, 2.21976)
 
 [node name="SpawnPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 2)
