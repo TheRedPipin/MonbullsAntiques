@@ -1,16 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://dvt7a56d5sc1f"]
+[gd_scene load_steps=5 format=3 uid="uid://dvt7a56d5sc1f"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_21qhi"]
-height = 1.0
+[ext_resource type="Script" uid="uid://bykmkt1ltgva2" path="res://Scenes/EntitieLogic.gd" id="1_evrbl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_21qhi"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_21qhi"]
 height = 1.0
 
+[sub_resource type="BoxMesh" id="BoxMesh_evrbl"]
+
 [node name="Antique" type="StaticBody3D" groups=["Antique"]]
+script = ExtResource("1_evrbl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00256014, 0.00608629, 0.000504017)
-shape = SubResource("CapsuleShape3D_21qhi")
+shape = SubResource("BoxShape3D_21qhi")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Orb" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_21qhi")
+
+[node name="Box" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("BoxMesh_evrbl")

@@ -43,7 +43,7 @@ mesh = SubResource("BoxMesh_jl0w5")
 [node name="SubViewport" type="SubViewport" parent="."]
 disable_3d = true
 transparent_bg = true
-size = Vector2i(1024, 512)
+size = Vector2i(1280, 1080)
 
 [node name="UI" type="Control" parent="SubViewport"]
 layout_mode = 3
@@ -67,6 +67,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextBox" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 1.9698, 0)
+transform = Transform3D(-2.15651, 0, 8.74228e-08, 0, 1.35, 0, -1.88528e-07, 0, -1, 0, 2.07097, 0)
 material_override = SubResource("StandardMaterial3D_awebk")
 mesh = SubResource("QuadMesh_jl0w5")
