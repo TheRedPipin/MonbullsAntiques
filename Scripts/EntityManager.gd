@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @export var label: RichTextLabel
 @export var panel: Panel
+@export var Grunt: AudioStreamPlayer3D
 @export var cps: float = 20.0
 
 var _task_id: int = 0
@@ -15,6 +16,7 @@ func _ready() -> void:
 func type_text(message: String) -> void:
 	_task_id += 1
 	var my_task := _task_id
+	Grunt.play()
 	if label == null:
 		return
 	panel.visible = true
@@ -25,7 +27,6 @@ func type_text(message: String) -> void:
 	if cps <= 0.0:
 		label.visible_characters = -1
 		return
-
 	var delay := 1.0 / cps
 	var total := label.get_total_character_count()
 

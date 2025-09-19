@@ -11,6 +11,9 @@ extends Camera3D
 @export var desk_anchor: Node3D
 @export var desk_offset: Vector3 = Vector3(0, 0.1, 0)
 
+@export var Textrec : TextureRect
+@export var Smoke: GPUParticles3D
+
 # Customer detection config
 signal customer_targeted(customer: CharacterBody3D) 
 
@@ -25,7 +28,11 @@ func _ready() -> void:
 	_space_state = get_world_3d().direct_space_state
 
 func _process(_delta: float) -> void:
-	var hit := _raycast() 
+	var hit := _raycast()
+	if not hit.is_empty():
+		Textrec.self_modulate = Color(1.0, 1.0, 1.0, 0.459)
+	else:
+		Textrec.self_modulate = Color(1.0, 1.0, 1.0)
 	_update_antique_highlight(hit)
 
 func _input(event: InputEvent) -> void:
@@ -43,7 +50,6 @@ func _check_for_customer() -> void:
 	var hit := _raycast()
 	if hit.is_empty():
 		return
-
 	var col := hit.get("collider") as Node
 	if col is CharacterBody3D and col.is_in_group("Customer"):
 		emit_signal("customer_targeted", col)
@@ -101,7 +107,6 @@ func _toggle_antique(antique: Node3D) -> void:
 		var mv: Variant = antique.get_meta("on_desk")
 		if mv is bool:
 			on_desk = bool(mv)
-
 	if on_desk:
 		_return_to_original(antique)
 		if _desk_item == antique:
@@ -114,11 +119,11 @@ func _toggle_antique(antique: Node3D) -> void:
 		_desk_item = antique
 
 func _place_on_desk(antique: Node3D) -> void:
+	Smoke.restart()
 	if not antique.has_meta("orig_parent_path"):
 		antique.set_meta("orig_parent_path", antique.get_parent().get_path())
 	if not antique.has_meta("orig_global_xform"):
 		antique.set_meta("orig_global_xform", antique.global_transform)
-
 	var parent_now := antique.get_parent()
 	if parent_now != null:
 		parent_now.remove_child(antique)
@@ -133,6 +138,7 @@ func _place_on_desk(antique: Node3D) -> void:
 	Global.onTable = [antique.selected_index, antique.color_index]
 
 func _return_to_original(antique: Node3D) -> void:
+	Smoke.restart()
 	var parent_path := antique.get_meta("orig_parent_path") as NodePath
 	var orig_xform := antique.get_meta("orig_global_xform") as Transform3D
 	var orig_parent := get_node_or_null(parent_path)

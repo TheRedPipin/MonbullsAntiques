@@ -11,7 +11,6 @@ extends Node3D
 @export var spawn_markers: Array[Node3D] = []
 @export var color_amount: int = 5
 @export var type_amount: int = 3
-
 var shop_colors: Array[int] = []
 var shop_types: Array[int] = []
 var attempts = 3
@@ -29,6 +28,7 @@ func _spawn_and_start() -> void:
 	customerNum += 1
 	if customerNum == 5:
 		customerNum = 0
+		Global.landlord = true
 		generate_shop(spawn_markers.size())
 		return
 	attempts = 3
