@@ -24,6 +24,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00256014, 0.00608629, 0.00
 shape = SubResource("BoxShape3D_21qhi")
 
 [node name="Orb" type="MeshInstance3D" parent="."]
+visible = false
 material_override = SubResource("StandardMaterial3D_evrbl")
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_21qhi")

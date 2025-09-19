@@ -10,7 +10,6 @@ extends Node3D
 	Color(0, 0, 1),      # 2 blue
 	Color(0, 1, 0),      # 3 green
 	Color(1, 1, 0),      # 4 yellow
-	Color(0.6, 0, 1)     # 5 purple
 ]
 
 func _ready() -> void:

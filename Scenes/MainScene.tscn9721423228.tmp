@@ -91,7 +91,10 @@ fov = 73.3252
 script = ExtResource("4_y4jh7")
 ray_length = 100.0
 outline_material = SubResource("ShaderMaterial_f140w")
+outline_width_local = null
 desk_anchor = NodePath("../../CounterPoint")
+desk_offset = null
+customer_name = null
 
 [node name="AntiqueObjects" type="Node3D" parent="."]
 
