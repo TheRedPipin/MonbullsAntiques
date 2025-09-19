@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://csibr8201025i"]
+[gd_scene load_steps=29 format=3 uid="uid://csibr8201025i"]
 
 [ext_resource type="Script" uid="uid://dna7g363tswq8" path="res://Scripts/PlayerLogic.gd" id="1_hpc76"]
 [ext_resource type="Script" uid="uid://dsyy6ynmyq23o" path="res://Scripts/CustomerLogic.gd" id="1_tr2i4"]
@@ -28,6 +28,16 @@ shader_parameter/thickness = 0.05
 
 [sub_resource type="BoxMesh" id="BoxMesh_8ju71"]
 size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4b75m"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ju71"]
+resource_local_to_scene = true
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_4b75m")
+
+[sub_resource type="QuadMesh" id="QuadMesh_4b75m"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q68mp"]
 albedo_texture = ExtResource("6_y4jh7")
@@ -59,6 +69,9 @@ size = Vector2(1, 4)
 
 [sub_resource type="BoxMesh" id="BoxMesh_f140w"]
 size = Vector3(2, 0.1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4b75m"]
+bg_color = Color(0, 0, 0, 1)
 
 [node name="Node3D" type="Node3D" node_paths=PackedStringArray("spawn_point", "end_point", "cam", "spawn_markers")]
 script = ExtResource("1_tr2i4")
@@ -96,36 +109,42 @@ desk_anchor = NodePath("../../CounterPoint")
 [node name="AntiqueObjects" type="Node3D" parent="."]
 
 [node name="Antique1" type="Node3D" parent="AntiqueObjects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.00185, 1.2243, 4.61926)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.00185, 1.42318, 4.61926)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="AntiqueObjects/Antique1"]
 mesh = SubResource("BoxMesh_8ju71")
 
 [node name="Antique2" type="Node3D" parent="AntiqueObjects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.47075, 1.19226, 4.74505)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.47075, 1.39114, 4.74505)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="AntiqueObjects/Antique2"]
 mesh = SubResource("BoxMesh_8ju71")
 
 [node name="Antique3" type="Node3D" parent="AntiqueObjects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.97387, 1.1587, 4.62513)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.97387, 1.35758, 4.62513)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="AntiqueObjects/Antique3"]
 mesh = SubResource("BoxMesh_8ju71")
 
 [node name="Antique4" type="Node3D" parent="AntiqueObjects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0285189, 2.33097, 4.42181)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0231862, 2.5162, 4.61537)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="AntiqueObjects/Antique4"]
 mesh = SubResource("BoxMesh_8ju71")
 
 [node name="Antique5" type="Node3D" parent="AntiqueObjects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.90604, 2.30437, 4.35538)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.91137, 2.4896, 4.54894)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="AntiqueObjects/Antique5"]
 mesh = SubResource("BoxMesh_8ju71")
 
 [node name="Envioment" type="Node3D" parent="."]
+
+[node name="Till" type="MeshInstance3D" parent="Envioment"]
+transform = Transform3D(0.770691, -0.217938, 0.59878, 1.8047e-08, 0.939693, 0.34202, -0.637209, -0.263592, 0.724213, 2.15893, 1.49746, -3.00883)
+material_override = SubResource("StandardMaterial3D_8ju71")
+mesh = SubResource("QuadMesh_4b75m")
+skeleton = NodePath("../..")
 
 [node name="Floor" type="MeshInstance3D" parent="Envioment"]
 material_override = SubResource("StandardMaterial3D_q68mp")
@@ -214,4 +233,41 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -2.4)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.24325, 1.24424, 0.132169)
 
 [node name="EndPoint" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2.4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1.49765)
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="Control" type="Control" parent="SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="Panel" type="Panel" parent="SubViewport/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4b75m")
+
+[node name="Label" type="RichTextLabel" parent="SubViewport/Control/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(2.70735e-06, 0.467412, 5.77569e-07, 1)
+theme_override_font_sizes/normal_font_size = 64
+text = "You have
+$100,000,000"
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1

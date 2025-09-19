@@ -7,35 +7,45 @@ extends Node3D
 @export var cam: Camera3D
 @export var speed: float = 3.0
 @export var rotate_with_path: bool = true
-
-var customer: Node3D
-var rng := RandomNumberGenerator.new()
-
 @export var antique_scene: PackedScene
 @export var spawn_markers: Array[Node3D] = []
-@export var color_amount: int = 6
+@export var color_amount: int = 5
 @export var type_amount: int = 3
+
 var shop_colors: Array[int] = []
 var shop_types: Array[int] = []
+var attempts = 3
+var customerNum = 0
+var moneyAmounts = [50,75,100]
+var customer: Node3D
+var rng := RandomNumberGenerator.new()
+var want_idx : int
 func _ready() -> void:
 	rng.randomize()
 	cam.customer_targeted.connect(try_to_sell)
 	generate_shop(spawn_markers.size())
-	await _spawn_and_start()
 
 func _spawn_and_start() -> void:
+	customerNum += 1
+	if customerNum == 5:
+		customerNum = 0
+		generate_shop(spawn_markers.size())
+		return
+	attempts = 3
 	customer = customer_scene.instantiate()
+	want_idx = rng.randi_range(0, shop_types.size() - 1)
+	Global.noun_key = shop_types[want_idx]
+	Global.adj_key = shop_colors[want_idx]
 	add_child(customer)
 	customer.global_position = spawn_point.global_position
 	var tw = await customer.move_to_endpoint(end_point, 3.0)
 	await tw.finished
-	var want_idx := rng.randi_range(0, shop_types.size() - 1)
-	Global.noun_key = shop_types[want_idx]
-	Global.adj_key = shop_colors[want_idx]
 	var msg := "May I please have a [font=res://Fonts/Eater-Regular.ttf]%s[/font] in [font=res://Fonts/Eater-Regular.ttf]%s[/font]" % [Global.nouns[Global.noun_key], Global.adjectives[Global.adj_key]]
 	await customer.type_text(msg)
 
 func generate_shop(request_count: int) -> void:
+	for i in get_tree().get_nodes_in_group("Antique"):
+		i.queue_free()
 	var count = min(request_count, spawn_markers.size())
 	shop_colors.clear()
 	shop_types.clear()
@@ -50,9 +60,28 @@ func generate_shop(request_count: int) -> void:
 		inst.set("color_index", c_idx)
 		add_child(inst)
 		inst.global_transform = marker.global_transform
-
+	_spawn_and_start()
 
 func try_to_sell(customer: CharacterBody3D) -> void:
-	print(Global.noun_key, Global.adj_key, Global.onTable)
 	if Global.noun_key == Global.onTable[0] and Global.adj_key == Global.onTable[1]:
-		print("Correct")
+		for i in get_tree().get_nodes_in_group("Antique"):
+			if i.get_meta("on_desk") == true:
+				i.queue_free()
+		Global.money += moneyAmounts[attempts-1]
+		shop_types.pop_at(want_idx)
+		shop_colors.pop_at(want_idx)
+		customer.queue_free()
+		_spawn_and_start()
+	else:
+		attempts -= 1
+		if attempts == 0:
+			var msg := "This place sucks!"
+			customer.remove_from_group("Customer")
+			await customer.type_text(msg)
+			customer.queue_free()
+			_spawn_and_start()
+		var msg := "twin sybau ♥🥀"
+		await customer.type_text(msg)
+
+func _physics_process(delta: float) -> void:
+	$SubViewport/Control/Panel/Label.text = "You Have\n$%s" % [Global.money]

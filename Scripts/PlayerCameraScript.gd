@@ -12,7 +12,6 @@ extends Camera3D
 @export var desk_offset: Vector3 = Vector3(0, 0.1, 0)
 
 # Customer detection config
-@export var customer_name: StringName = &"Entitie"
 signal customer_targeted(customer: CharacterBody3D) 
 
 # ---------------- State ----------------
@@ -46,7 +45,7 @@ func _check_for_customer() -> void:
 		return
 
 	var col := hit.get("collider") as Node
-	if col is CharacterBody3D and col.name == customer_name:
+	if col is CharacterBody3D and col.is_in_group("Customer"):
 		emit_signal("customer_targeted", col)
 
 # =========================================================
@@ -145,6 +144,7 @@ func _return_to_original(antique: Node3D) -> void:
 	orig_parent.add_child(antique)
 	antique.global_transform = orig_xform
 	antique.set_meta("on_desk", false)
+	Global.onTable = [-1, -1]
 
 # =========================================================
 # Helpers
