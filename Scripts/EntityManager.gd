@@ -41,3 +41,11 @@ func stop_typing() -> void:
 	if label:
 		label.visible_characters = 0
 		panel.visible = true
+
+func move_to_endpoint(end_point: Node3D, duration: float = 2.0):
+	var target_pos: Vector3 = end_point.global_position
+	var tw := create_tween()
+	tw.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+	tw.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tw.tween_property(self, "global_position", target_pos, duration)
+	return tw

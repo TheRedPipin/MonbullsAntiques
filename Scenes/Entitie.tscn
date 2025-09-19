@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cxxaeqthg6e8c" path="res://Scripts/EntityManager.gd" id="1_awebk"]
 [ext_resource type="Texture2D" uid="uid://c7ugk0hou776i" path="res://Assets/Mr Cappy.png" id="2_x7hvf"]
-[ext_resource type="Script" uid="uid://bschy30abi24s" path="res://Scenes/sub_viewport.gd" id="3_762rp"]
+[ext_resource type="Script" uid="uid://bschy30abi24s" path="res://Scripts/sub_viewport.gd" id="3_762rp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tsqtg"]
 
@@ -30,6 +30,7 @@ billboard_mode = 1
 size = Vector2(3, 1)
 
 [node name="Entitie" type="CharacterBody3D" node_paths=PackedStringArray("label", "panel")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("1_awebk")
 label = NodePath("SubViewport/UI/RichTextLabel")
 panel = NodePath("SubViewport/UI/Panel")
@@ -58,6 +59,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="SubViewport/UI"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -76,7 +78,6 @@ grow_vertical = 2
 theme_override_colors/default_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/normal_font_size = 128
 bbcode_enabled = true
-text = "asdsadasd"
 horizontal_alignment = 1
 vertical_alignment = 1
 

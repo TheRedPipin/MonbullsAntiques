@@ -1,27 +1,41 @@
-[gd_scene load_steps=5 format=3 uid="uid://dvt7a56d5sc1f"]
+[gd_scene load_steps=7 format=3 uid="uid://dvt7a56d5sc1f"]
 
 [ext_resource type="Script" uid="uid://bykmkt1ltgva2" path="res://Scripts/AntiqueLogic.gd" id="1_evrbl"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_21qhi"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_evrbl"]
+albedo_color = Color(0, 0.705882, 0, 1)
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_21qhi"]
 height = 1.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_evrbl"]
+lightmap_size_hint = Vector2i(14, 21)
+
+[sub_resource type="PrismMesh" id="PrismMesh_evrbl"]
 
 [node name="Antique" type="StaticBody3D" node_paths=PackedStringArray("variants") groups=["Antique"]]
 script = ExtResource("1_evrbl")
-variants = [NodePath("Orb"), NodePath("Box")]
+variants = [NodePath("Orb"), NodePath("Box"), NodePath("Prism")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00256014, 0.00608629, 0.000504017)
 shape = SubResource("BoxShape3D_21qhi")
 
 [node name="Orb" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_evrbl")
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_21qhi")
 
 [node name="Box" type="MeshInstance3D" parent="."]
 visible = false
+material_override = SubResource("StandardMaterial3D_evrbl")
 cast_shadow = 0
 mesh = SubResource("BoxMesh_evrbl")
+
+[node name="Prism" type="MeshInstance3D" parent="."]
+visible = false
+material_override = SubResource("StandardMaterial3D_evrbl")
+cast_shadow = 0
+mesh = SubResource("PrismMesh_evrbl")
