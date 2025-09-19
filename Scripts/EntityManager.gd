@@ -1,15 +1,15 @@
 extends CharacterBody3D
 
 @export var label: RichTextLabel
+@export var panel: Panel
 @export var cps: float = 20.0
 
 var _task_id: int = 0
 
 func _ready() -> void:
-	if label:
-		label.bbcode_enabled = true
-		label.text = ""
-		label.visible_characters = 0
+	label.bbcode_enabled = true
+	label.text = ""
+	label.visible_characters = 0
 
 
 func type_text(message: String) -> void:
@@ -17,7 +17,7 @@ func type_text(message: String) -> void:
 	var my_task := _task_id
 	if label == null:
 		return
-
+	panel.visible = true
 	label.bbcode_enabled = true
 	label.text = message
 	label.visible_characters = 0
@@ -40,3 +40,4 @@ func stop_typing() -> void:
 	_task_id += 1
 	if label:
 		label.visible_characters = 0
+		panel.visible = true

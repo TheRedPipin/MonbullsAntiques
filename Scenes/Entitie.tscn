@@ -1,17 +1,18 @@
 [gd_scene load_steps=9 format=3 uid="uid://dfca7nhy5ttrr"]
 
 [ext_resource type="Script" uid="uid://cxxaeqthg6e8c" path="res://Scripts/EntityManager.gd" id="1_awebk"]
+[ext_resource type="Texture2D" uid="uid://c7ugk0hou776i" path="res://Assets/Mr Cappy.png" id="2_x7hvf"]
+[ext_resource type="Script" uid="uid://bschy30abi24s" path="res://Scenes/sub_viewport.gd" id="3_762rp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tsqtg"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_fgr07"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jl0w5"]
-albedo_color = Color(1, 0, 1, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_jl0w5"]
-material = SubResource("StandardMaterial3D_jl0w5")
-size = Vector3(0.25, 0.25, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awebk"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_jl0w5"]
 viewport_path = NodePath("SubViewport")
@@ -19,31 +20,34 @@ viewport_path = NodePath("SubViewport")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_awebk"]
 resource_local_to_scene = true
 transparency = 1
+shading_mode = 0
+disable_ambient_light = true
 albedo_texture = SubResource("ViewportTexture_jl0w5")
+disable_receive_shadows = true
+billboard_mode = 1
 
 [sub_resource type="QuadMesh" id="QuadMesh_jl0w5"]
-size = Vector2(1, 0.5)
+size = Vector2(3, 1)
 
-[node name="Entitie" type="CharacterBody3D" node_paths=PackedStringArray("label")]
+[node name="Entitie" type="CharacterBody3D" node_paths=PackedStringArray("label", "panel")]
 script = ExtResource("1_awebk")
 label = NodePath("SubViewport/UI/RichTextLabel")
+panel = NodePath("SubViewport/UI/Panel")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.713, 0)
 shape = SubResource("CapsuleShape3D_tsqtg")
 
-[node name="Body" type="MeshInstance3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.713, 0)
-mesh = SubResource("CapsuleMesh_fgr07")
-
-[node name="Face" type="MeshInstance3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 1.289, -0.443708)
-mesh = SubResource("BoxMesh_jl0w5")
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 1.30331, 0)
+texture = ExtResource("2_x7hvf")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 disable_3d = true
 transparent_bg = true
-size = Vector2i(1280, 1080)
+fsr_sharpness = 2.0
+size = Vector2i(1920, 1080)
+script = ExtResource("3_762rp")
 
 [node name="UI" type="Control" parent="SubViewport"]
 layout_mode = 3
@@ -53,6 +57,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Panel" type="Panel" parent="SubViewport/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_awebk")
+
 [node name="RichTextLabel" type="RichTextLabel" parent="SubViewport/UI"]
 layout_mode = 1
 anchors_preset = 15
@@ -60,13 +73,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_colors/default_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/normal_font_size = 128
 bbcode_enabled = true
+text = "asdsadasd"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextBox" type="MeshInstance3D" parent="."]
-transform = Transform3D(-2.15651, 0, 8.74228e-08, 0, 1.35, 0, -1.88528e-07, 0, -1, 0, 2.07097, 0)
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 2.62935, 0)
 material_override = SubResource("StandardMaterial3D_awebk")
+cast_shadow = 0
 mesh = SubResource("QuadMesh_jl0w5")
