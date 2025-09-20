@@ -47,9 +47,35 @@ func _spawn_and_start() -> void:
 	Global.adj_key = shop_colors[want_idx]
 	add_child(customer)
 	customer.global_position = spawn_point.global_position
+	rng.randomize()
+	var generic = rng.randf()
+	if generic > 0.5:
+		generic = false
+	else:
+		generic = true
 	var tw = await customer.move_to_endpoint(end_point, 3.0)
 	await tw.finished
-	var msg := "May I please have a [font=res://Fonts/Eater-Regular.ttf]%s[/font] in [font=res://Fonts/Eater-Regular.ttf]%s[/font]" % [Global.nouns[Global.noun_key], Global.adjectives[Global.adj_key]]
+	var msg : String
+	var NPC_num = -1
+	if generic:
+		msg = Global.dialog["NPCG"][rng.randi_range(0, Global.dialog["NPCG"].size()-1)]
+	else:
+		for i in range(Global.NPC_Visits.size()):
+			if Global.NPC_Visits[i] == false:
+				NPC_num = i
+				Global.NPC_Visits[i] = true
+				msg = Global.dialog[str(NPC_num)][0]
+		if NPC_num == -1:
+			msg = Global.dialog["NPCG"][rng.randi_range(0, Global.dialog["NPCG"].size()-1)]
+			generic = true
+	if !msg.contains("NOUN"):
+		Global.noun_key = -1
+	else:
+		msg = msg.replace("NOUN", Global.nouns[Global.noun_key])
+	if !msg.contains("ADJ"):
+		Global.adj_key = -1
+	else:
+		msg = msg.replace("ADJ", Global.adjectives[Global.adj_key])
 	await customer.type_text(msg)
 
 func generate_shop(request_count: int) -> void:
@@ -78,13 +104,16 @@ func try_to_sell(customer: CharacterBody3D) -> void:
 			customer.queue_free()
 			Global.landlord = false
 			_spawn_and_start()
-	if Global.noun_key == Global.onTable[0] and Global.adj_key == Global.onTable[1]:
+	if (Global.noun_key == Global.onTable[0] or Global.noun_key == -1) and (Global.adj_key == Global.onTable[1] or Global.adj_key == -1):
+		var findIndex = 0
 		for i in get_tree().get_nodes_in_group("Antique"):
 			if i.get_meta("on_desk") == true:
 				i.queue_free()
+				break
+			findIndex += 1
 		Global.money += moneyAmounts[attempts-1]
-		shop_types.pop_at(want_idx)
-		shop_colors.pop_at(want_idx)
+		shop_types.pop_at(findIndex)
+		shop_colors.pop_at(findIndex)
 		Global.onTable = [-1,-1]
 		customer.queue_free()
 		_spawn_and_start()
