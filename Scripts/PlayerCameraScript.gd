@@ -135,7 +135,8 @@ func _place_on_desk(antique: Node3D) -> void:
 	)
 	antique.global_transform = new_xform
 	antique.set_meta("on_desk", true)
-	Global.onTable = [antique.selected_index, antique.color_index]
+	print(Global.onTable)
+	Global.onTable = antique.selected_index
 
 func _return_to_original(antique: Node3D) -> void:
 	Smoke.restart()
@@ -150,7 +151,7 @@ func _return_to_original(antique: Node3D) -> void:
 	orig_parent.add_child(antique)
 	antique.global_transform = orig_xform
 	antique.set_meta("on_desk", false)
-	Global.onTable = [-1, -1]
+	Global.onTable = -1
 
 # =========================================================
 # Helpers

@@ -4,6 +4,7 @@ extends CharacterBody3D
 @export var panel: Panel
 @export var Grunt: AudioStreamPlayer3D
 @export var cps: float = 20.0
+@export var sprites: Array[Texture]
 
 var _task_id: int = 0
 
@@ -11,6 +12,8 @@ func _ready() -> void:
 	label.bbcode_enabled = true
 	label.text = ""
 	label.visible_characters = 0
+	randomize()
+	$Sprite3D.texture = sprites[randi_range(0,sprites.size()-1)]
 
 
 func type_text(message: String) -> void:
