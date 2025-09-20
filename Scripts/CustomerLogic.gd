@@ -27,8 +27,17 @@ func _ready() -> void:
 func _spawn_and_start() -> void:
 	customerNum += 1
 	if customerNum == 5:
-		customerNum = 0
 		Global.landlord = true
+		customer = customer_scene.instantiate()
+		add_child(customer)
+		customer.global_position = spawn_point.global_position
+		var tw = await customer.move_to_endpoint(end_point, 3.0)
+		await tw.finished
+		var msg := "I am landlord give money pls"
+		await customer.type_text(msg)
+		return
+	elif customerNum == 6:
+		customerNum = 0
 		generate_shop(spawn_markers.size())
 		return
 	attempts = 3
@@ -63,6 +72,12 @@ func generate_shop(request_count: int) -> void:
 	_spawn_and_start()
 
 func try_to_sell(customer: CharacterBody3D) -> void:
+	if Global.landlord == true:
+		if Global.money >= Global.landlordRequirement:
+			Global.money -= Global.landlordRequirement
+			customer.queue_free()
+			Global.landlord = false
+			_spawn_and_start()
 	if Global.noun_key == Global.onTable[0] and Global.adj_key == Global.onTable[1]:
 		for i in get_tree().get_nodes_in_group("Antique"):
 			if i.get_meta("on_desk") == true:
@@ -70,6 +85,7 @@ func try_to_sell(customer: CharacterBody3D) -> void:
 		Global.money += moneyAmounts[attempts-1]
 		shop_types.pop_at(want_idx)
 		shop_colors.pop_at(want_idx)
+		Global.onTable = [-1,-1]
 		customer.queue_free()
 		_spawn_and_start()
 	else:
